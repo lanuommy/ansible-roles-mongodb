@@ -1,0 +1,13 @@
+[Unit]
+
+Description=mongodb
+After=network.target remote-fs.target nss-lookup.target
+
+[Service]
+Type=forking
+ExecStart=/data/mongodb/bin/mongod -f /data/mongodb/etc/mongodb.conf
+ExecStop=/data/mongodb/bin/mongod --shutdown -f /data/mongodb/etc/mongodb.conf
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

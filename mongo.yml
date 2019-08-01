@@ -1,0 +1,11 @@
+---
+- name: setup mongo
+  hosts: testservers
+  remote_user: root
+  vars:
+     add_user: true
+     install_mongo: true
+     config_mongo: true 
+  roles:
+    - mongo-single-build
+

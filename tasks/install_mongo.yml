@@ -1,0 +1,27 @@
+---
+- name: copy tar to mongoserver
+#  copy: "src={{ mongo_tar_name }}  dest=/tmp owner={{ user }} group = {{ group }} mode=755"
+  shell: "wget https://fastdl.mongodb.org/linux/{{mongo_tar_name}} -O /tmp/{{mongo_tar_name}}"
+
+- name: unzip mongo and create dir
+  #shell: "mkdir -p {{work_path}}"
+  file: "path={{work_path}} state=directory owner={{ user }} group = {{ group }} mode=755"
+
+- name: tar this mongo file
+  shell: "cd /tmp && tar xvf {{ mongo_tar_name }}"
+  #copy: "src=/tmp/mongodb-linux-x86_64-rhel70-{{mongodb_version}} dest={{work_path}}/mongodb owner={{ user }} group = {{ group }} mode=755"
+- name: copy the mongofile to work dir
+  shell: "cp -rf /tmp/mongodb-linux-x86_64-rhel70-{{mongodb_version}} {{work_path}}/mongodb"
+#  shell: "mkdir -p {{mongodb_log_path}} {{mongodb_data_dir_path}} {{mongodb_conf_path}}"
+
+- name: mkdir logpath datapath
+  #file: "path={{mongodb_log_path}} {{mongodb_data_dir_path}} {{mongodb_conf_path}} state=directory owner={{ user }} group = {{ group }} mode=755"
+  file: "path={{mongodb_log_path}} state=directory owner={{ user }} group = {{ group }} mode=755"
+- name: create data dir  
+  file: "path={{mongodb_data_dir_path}} state=directory owner={{ user }} group = {{ group }} mode=755"
+
+- name: create conf dir
+  file: "path={{mongodb_conf_path}} state=directory owner={{ user }} group = {{ group }} mode=755"
+
+- name: chown dir premmsion
+  shell: "chown -R {{ user }}:{{ group }} {{work_path}}/mongodb"

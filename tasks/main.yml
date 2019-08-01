@@ -1,0 +1,11 @@
+---
+- include: pre.yml
+
+- include: user.yml
+  when: add_user
+  
+- include: install_mongo.yml
+  when: install_mongo
+
+- include: config_mongo.yml
+  when: config_mongo

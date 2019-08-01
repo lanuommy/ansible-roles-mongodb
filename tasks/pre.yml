@@ -1,0 +1,7 @@
+---
+
+- name: stop the firewalld 
+  systemd: state=stopped name=firewalld
+
+- name: install wget tools
+  yum: name=wget state=latest

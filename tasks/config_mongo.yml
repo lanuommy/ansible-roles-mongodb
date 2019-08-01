@@ -1,0 +1,13 @@
+---
+
+- name: copy config file and configure it
+  template: src=mongodb.conf dest={{mongodb_conf_path}} mode=644 owner={{ user }} group = {{ group }}
+
+- name: systemd add to system
+  template: src=mongodb.service dest=/usr/lib/systemd/system 
+
+- name: mongodb transcript setup
+  template: src=mongod.sh dest={{mongodb_conf_path}} mode=755 owner={{ user }} group = {{ group }}
+
+- name: start mongodb
+  systemd: state=started name=mongodb
